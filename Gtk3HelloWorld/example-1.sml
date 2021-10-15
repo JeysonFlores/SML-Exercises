@@ -2,20 +2,18 @@ fun printHello () = print "Hello World\n"
 
 fun activate app () =
   let
-    open Gtk
+    val window = Gtk.ApplicationWindow.new app
+    val () = Gtk.Window.setTitle window "Gtk3 SML"
+    val () = Gtk.Window.setDefaultSize window (200, 200)
 
-    val window = ApplicationWindow.new app
-    val () = Window.setTitle window "Gtk3 SML"
-    val () = Window.setDefaultSize window (200, 200)
+    val buttonBox = Gtk.ButtonBox.new Gtk.Orientation.HORIZONTAL
+    val () = Gtk.Container.add window buttonBox
 
-    val buttonBox = ButtonBox.new Orientation.HORIZONTAL
-    val () = Container.add window buttonBox
+    val button = Gtk.Button.newWithLabel "Hello World"
+    val _ = Signal.connect button (Gtk.Button.clickedSig, printHello)
+    val () = Gtk.Container.add buttonBox button
 
-    val button = Button.newWithLabel "Hello World"
-    val _ = Signal.connect button (Button.clickedSig, printHello)
-    val () = Container.add buttonBox button
-
-    val () = Widget.showAll window
+    val () = Gtk.Widget.showAll window
   in
     ()
   end
